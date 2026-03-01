@@ -1,0 +1,72 @@
+<div class="container mt-4">
+
+    <h2>Asset List</h2>
+
+    <!-- ✅ EXPORT BUTTON (GOES HERE, ABOVE TABLE) -->
+    <a href="{% url 'export_assets_csv' %}" 
+       class="btn btn-success mb-3">
+        Export to CSV
+    </a>
+
+    <!-- ✅ TABLE -->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Cost</th>
+                <th>Assigned User</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for asset in assets %}
+            <tr>
+                <td>{{ asset.name }}</td>
+                <td>{{ asset.asset_type }}</td>
+                <td>{{ asset.cost }}</td>
+                <td>{{ asset.assigned_user }}</td>
+                <td>
+                    <a href="{% url 'asset_detail' asset.id %}" 
+                       class="btn btn-info btn-sm">
+                        View
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- ✅ PAGINATION (YOUR CODE GOES HERE) -->
+    <nav>
+      <ul class="pagination justify-content-center">
+        
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page=1">First</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+          </li>
+        {% endif %}
+
+        <li class="page-item active">
+          <span class="page-link">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+          </span>
+        </li>
+
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+          </li>
+        {% endif %}
+        
+      </ul>
+    </nav>
+
+</div>
